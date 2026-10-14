@@ -1,0 +1,32 @@
+# Render Blueprint for the Credit Follow API (https://render.com/docs/blueprint-spec).
+# Render → New → Blueprint → pick this repository. Secrets marked `sync: false` are
+# entered in the Render dashboard; they are never stored in this file.
+services:
+  - type: web
+    name: credit-follow-api
+    runtime: node
+    plan: free
+    region: frankfurt
+    # Installs the npm workspaces (dev dependencies are needed to compile TypeScript),
+    # then builds packages/shared and services/api.
+    buildCommand: npm ci --include=dev && npm run build
+    startCommand: npm run start:api
+    healthCheckPath: /health
+    envVars:
+      - key: NODE_VERSION
+        value: '24'
+      - key: NODE_ENV
+        value: production
+      # Render terminates TLS in front of the app: trust it for client IPs (rate limiting).
+      - key: TRUST_PROXY
+        value: 'true'
+      # Skip the ~800 MB test-only MongoDB download from mongodb-memory-server.
+      - key: MONGOMS_DISABLE_POSTINSTALL
+        value: '1'
+      # A new random signing secret for production sessions.
+      - key: JWT_SECRET
+        generateValue: true
+      - key: MONGODB_URI
+        sync: false
+      - key: GOOGLE_CLIENT_IDS
+        sync: false

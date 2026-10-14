@@ -1,0 +1,43 @@
+{
+  "name": "@credit-follow/api",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Credit Follow REST API (Express + Mongoose)",
+  "type": "module",
+  "main": "./dist/index.js",
+  "scripts": {
+    "dev": "tsx watch src/index.ts",
+    "build": "tsc -p tsconfig.build.json",
+    "start": "node dist/index.js",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "lint": "eslint src",
+    "test": "vitest run",
+    "dev:reset-user": "tsx src/scripts/resetDevUser.ts",
+    "migrate:category-kind": "tsx src/scripts/migrateCategoryKind.ts"
+  },
+  "dependencies": {
+    "@credit-follow/shared": "0.1.0",
+    "cors": "^2.8.5",
+    "express": "^5.1.0",
+    "express-rate-limit": "8.7.0",
+    "helmet": "^8.1.0",
+    "jose": "^6.2.12",
+    "mongoose": "^9.0.0",
+    "zod": "^4.1.0"
+  },
+  "devDependencies": {
+    "@types/cors": "^2.8.19",
+    "@types/express": "^5.0.3",
+    "@types/node": "^24.0.0",
+    "@types/supertest": "^6.0.3",
+    "mongodb-memory-server": "^11.0.0",
+    "supertest": "^7.1.0",
+    "tsx": "^4.20.0",
+    "vitest": "^4.1.0"
+  },
+  "config": {
+    "mongodbMemoryServer": {
+      "downloadDir": "../../node_modules/.cache/mongodb-memory-server"
+    }
+  }
+}
